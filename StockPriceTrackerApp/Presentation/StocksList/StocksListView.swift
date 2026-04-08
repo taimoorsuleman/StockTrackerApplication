@@ -61,7 +61,7 @@ struct StocksListView: View {
 				action: { viewModel.sort(by: .stock) },
 				alignment: .leading
 			)
-			.frame(width: layout.stockWidth, alignment: .leading)
+			.frame(width: safeWidth(layout.stockWidth), alignment: .leading)
 
 			StockHeaderSortButton(
 				title: "Price",
@@ -70,7 +70,7 @@ struct StocksListView: View {
 				action: { viewModel.sort(by: .price) },
 				alignment: .trailing
 			)
-			.frame(width: layout.priceWidth, alignment: .trailing)
+			.frame(width: safeWidth(layout.priceWidth), alignment: .trailing)
 
 			StockHeaderSortButton(
 				title: "Change",
@@ -79,7 +79,7 @@ struct StocksListView: View {
 				action: { viewModel.sort(by: .priceChange) },
 				alignment: .trailing
 			)
-			.frame(width: layout.changeWidth, alignment: .trailing)
+			.frame(width: safeWidth(layout.changeWidth), alignment: .trailing)
 
 			StockHeaderSortButton(
 				title: "Change %",
@@ -88,7 +88,7 @@ struct StocksListView: View {
 				action: { viewModel.sort(by: .priceChangePercentage) },
 				alignment: .trailing
 			)
-			.frame(width: layout.percentageWidth, alignment: .trailing)
+			.frame(width: safeWidth(layout.percentageWidth), alignment: .trailing)
 		}
 		.padding(.horizontal, layout.horizontalPadding)
 	}
@@ -149,6 +149,11 @@ struct StocksListView: View {
 		.clipShape(RoundedRectangle(cornerRadius: 12))
 	}
 
+	private func safeWidth(_ width: CGFloat) -> CGFloat {
+		guard width.isFinite else { return 0 }
+		return max(width, 0)
+	}
+	
 	// MARK: Private Computed Properties
 
 	private var buttonTitle: String {
