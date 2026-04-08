@@ -64,7 +64,6 @@ final class StocksListViewModel: ObservableObject {
 	/// Binds repository publishers to UI state consumed by the stocks list screen.
 	private func bind() {
 		stockRepository.stocksPublisher
-			.receive(on: DispatchQueue.main)
 			.sink { [weak self] stocks in
 				guard let self else { return }
 				self.allStocks = stocks
@@ -73,7 +72,6 @@ final class StocksListViewModel: ObservableObject {
 			.store(in: &cancellables)
 
 		stockRepository.connectionStatePublisher
-			.receive(on: DispatchQueue.main)
 			.sink { [weak self] state in
 				guard let self else { return }
 				self.connectionState = state
@@ -85,7 +83,6 @@ final class StocksListViewModel: ObservableObject {
 			.store(in: &cancellables)
 
 		stockRepository.errorMessagePublisher
-			.receive(on: DispatchQueue.main)
 			.sink { [weak self] message in
 				guard let self else { return }
 				self.bannerMessage = message

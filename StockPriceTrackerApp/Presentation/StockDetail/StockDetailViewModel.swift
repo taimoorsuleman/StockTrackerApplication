@@ -41,7 +41,6 @@ final class StockDetailViewModel: ObservableObject {
 	/// without depending on the full list state.
 	private func bind() {
 		stockRepository.stockPublisher(for: symbol)
-			.receive(on: DispatchQueue.main)
 			.sink { [weak self] stock in
 				guard let self else { return }
 				self.stock = stock.map(StockDetailViewData.init)
